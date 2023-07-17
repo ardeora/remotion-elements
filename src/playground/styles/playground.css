@@ -1,0 +1,29 @@
+.gl-container {
+	flex: 1;
+	position: absolute;
+	z-index: 0;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+canvas {
+	border-radius: 50%;
+}
+
+@keyframes inhale {
+	0% {
+		font-variation-settings: 'wght' 20, 'wdth' 120;
+		/* transform: scaleX(0.9) scaleY(0.9); */
+		opacity: 0.4;
+	}
+	100% {
+		font-variation-settings: 'wght' 100, 'wdth' 120;
+		/* transform: scaleX(1.2) scaleY(1.1); */
+		opacity: 1;
+	}
+}
+/* 
+section div {
+	animation: inhale 2s infinite alternate;
+} */

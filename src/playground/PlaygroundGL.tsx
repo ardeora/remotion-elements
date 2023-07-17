@@ -70,15 +70,35 @@ const setup = (container: HTMLDivElement) => {
 			}
 		`,
 		fragmentShader: `
-			varying vec2 vUv;
 			uniform float time;
+			uniform sampler2D uTexture;
+			varying vec2 vUv;
 
-			void main()	{
+			vec4 rgb(float r, float g, float b) {
+				return vec4(r / 255.0, g / 255.0, b / 255.0, 1.0);
+			}
 
-				vec2 uv = vUv * 2.0 - 1.0; 
+			void main() {
+				vec2 uv = vUv;
+				vec2 point = fract(uv * 0.1 + time * 0.05);
+
+				vec4 dispColor = texture2D(uTexture, point);
+
+				vec4 tl = rgb(251.0, 41.0, 212.0);
+				vec4 tr = rgb(0.0, 255.0, 224.0);
+				vec4 bl = rgb(250.0, 255.0, 0.0);
+				vec4 br = rgb(231.0, 244.0, 255.0);
 				
-				gl_FragColor = vec4(uv, 0.0, 1.0);
+				float dispX = mix(-0.5, 0.5, dispColor.r);
+				float dispY = mix(-0.5, 0.5, dispColor.r);
+				
+				vec4 color = mix(
+						mix(tl, tr, uv.x + dispX), 
+						mix(bl, br, uv.x - dispX), 
+						uv.y + dispY
+				);
 
+				gl_FragColor = color;
 			}
 		`,
 	});
